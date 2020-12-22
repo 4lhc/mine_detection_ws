@@ -26,3 +26,13 @@ Segmentation fault (core dumped)
 log file: /home/sj/.ros/log/8dc2e708-4420-11eb-9e92-44032c8cf37a/gazebo-1*.log
 
 ```
+**FIX:**
+In the WS run:
+```sh
+cd ./src/hratc2017_framework/
+git apply ../../patches/fix_seg_fault_laser.patch
+
+#Fix the same error in hratc2017_robot too 
+cd ./src/hratc2017_robot/
+git apply ../../patches/fix_laser_hokuyu.patch 
+```

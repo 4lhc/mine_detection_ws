@@ -1,0 +1,26 @@
+diff --git a/description/urdf/hokuyo.urdf.xacro b/description/urdf/hokuyo.urdf.xacro
+index 4a1767f..898a656 100644
+--- a/description/urdf/hokuyo.urdf.xacro
++++ b/description/urdf/hokuyo.urdf.xacro
+@@ -55,7 +55,7 @@
+                         <resolution>0.001</resolution>
+                     </range>
+                     <noise>
+-                        <type>Gaussian</type>
++                        <type>gaussian</type>
+                         <mean>0.0</mean>
+                         <stddev>0.01</stddev>
+                     </noise>
+diff --git a/description/urdf/urdf/hokuyo.urdf.xacro b/description/urdf/urdf/hokuyo.urdf.xacro
+index 4a1767f..898a656 100644
+--- a/description/urdf/urdf/hokuyo.urdf.xacro
++++ b/description/urdf/urdf/hokuyo.urdf.xacro
+@@ -55,7 +55,7 @@
+                         <resolution>0.001</resolution>
+                     </range>
+                     <noise>
+-                        <type>Gaussian</type>
++                        <type>gaussian</type>
+                         <mean>0.0</mean>
+                         <stddev>0.01</stddev>
+                     </noise>

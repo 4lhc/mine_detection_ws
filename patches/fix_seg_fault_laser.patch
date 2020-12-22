@@ -1,0 +1,37 @@
+diff --git a/description/urdf/hokuyo.urdf.xacro b/description/urdf/hokuyo.urdf.xacro
+index 4a1767f..898a656 100644
+--- a/description/urdf/hokuyo.urdf.xacro
++++ b/description/urdf/hokuyo.urdf.xacro
+@@ -55,7 +55,7 @@
+                         <resolution>0.001</resolution>
+                     </range>
+                     <noise>
+-                        <type>Gaussian</type>
++                        <type>gaussian</type>
+                         <mean>0.0</mean>
+                         <stddev>0.01</stddev>
+                     </noise>
+diff --git a/launch/world-park.launch b/launch/world-park.launch
+index 3b50ab1..f2f7d9c 100644
+--- a/launch/world-park.launch
++++ b/launch/world-park.launch
+@@ -8,7 +8,7 @@
+   <arg name="gui" default="true"/>
+   <arg name="simple_rviz" default="true"/>
+   <arg name="headless" default="false"/>
+-  <arg name="debug" default="false"/>
++  <arg name="debug" default="true"/>
+   <arg name="verbose" default="true"/>
+ 
+   <!-- Set the type of terrain-->
+@@ -34,7 +34,9 @@
+   <arg     if="$(arg debug)" name="script_type" value="debug"/>
+ 
+   <!-- start gazebo server-->
+-  <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen"
++  <!-- <node launch-prefix="$(find debug_)/scripts/tmux_gdb" name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen" -->
++  <!-- <node launch-prefix="$(find gazebo_worlds)/scripts/gdbrun" name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen" -->
++  <node  name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen"
+ 	args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) $(arg world)">
+     <remap from="tf" to="gazebo_tf"/>
+   </node>
