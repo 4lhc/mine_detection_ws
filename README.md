@@ -9,8 +9,8 @@ catkin config -a --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TY
 
 ### Rosdep
 ```sh
-#rosdep install --reinstall --simulate --from-paths ./src --ignore-src #since
- running in singularity instance, run after starting with root privleges
+#rosdep install --reinstall --simulate --from-paths ./src --ignore-src
+#since running in singularity instance, run after starting with root privleges
   apt-get install ros-melodic-ros-control
   apt-get install ros-melodic-ros-controllers
   apt-get install ros-melodic-husky-navigation
