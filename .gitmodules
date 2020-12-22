@@ -1,0 +1,12 @@
+[submodule "src/hratc2017_entry_template"]
+	path = src/hratc2017_entry_template
+	url = https://github.com/ras-sight/hratc2017_entry_template.git
+[submodule "src/hratc2017_framework"]
+	path = src/hratc2017_framework
+	url = https://github.com/ras-sight/hratc2017_framework.git
+[submodule "src/hratc2017_robot"]
+	path = src/hratc2017_robot
+	url = https://github.com/ras-sight/hratc2017_robot.git
+[submodule "src/metal_detector_msgs"]
+	path = src/metal_detector_msgs
+	url = https://github.com/phir2-lab/metal_detector_msgs.git
