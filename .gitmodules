@@ -10,3 +10,6 @@
 [submodule "src/metal_detector_msgs"]
 	path = src/metal_detector_msgs
 	url = https://github.com/phir2-lab/metal_detector_msgs.git
+[submodule "src/follow_waypoints"]
+	path = src/follow_waypoints
+	url = https://github.com/danielsnider/follow_waypoints.git
