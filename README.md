@@ -18,7 +18,7 @@ catkin config -a --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TY
 ```
 
 
-Patches:
+### Patches
 
 In the workspace root directory run,
 
