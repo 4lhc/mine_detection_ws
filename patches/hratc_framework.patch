@@ -11,6 +11,104 @@ index 4a1767f..898a656 100644
                          <mean>0.0</mean>
                          <stddev>0.01</stddev>
                      </noise>
+diff --git a/description/worlds/flatMinefield.world b/description/worlds/flatMinefield.world
+index 0834172..d4153d4 100644
+--- a/description/worlds/flatMinefield.world
++++ b/description/worlds/flatMinefield.world
+@@ -44,7 +44,7 @@
+     </light>
+     <model name="landscape">
+       <link name="landscape_link">
+-        <pose>5 -5 0.5 0 0 0</pose>
++        <pose>0 0 0.5 0 0 0</pose>
+         <collision name="landscape_collision">
+           <geometry>
+             <mesh>
+@@ -70,7 +70,7 @@
+     <model name="tree1">
+       <static>true</static>
+       <link name="tree1_link">
+-	  <pose>15 -14.5 0.5 0 0 0</pose>
++	  <pose>-10 -11.5 0.5 0 0 0</pose>
+ 	  <collision name="tree1_collision">
+ 	      <geometry>
+ 		  <mesh>
+@@ -94,7 +94,7 @@
+     <model name="tree2">
+       <static>true</static>
+       <link name="tree2_link">
+-	  <pose>14 5 0.5 0 0 0.3</pose>
++	  <pose>9 5 0.5 0 0 0.3</pose>
+ 	  <collision name="tree2_collision">
+ 	      <geometry>
+ 		  <mesh>
+@@ -118,7 +118,7 @@
+     <model name="tree3">
+       <static>true</static>
+       <link name="tree3_link">
+-	  <pose>6.5 -14.3 0.5 0 0 0</pose>
++	  <pose>-6.5 9.3 0.5 0 0 0</pose>
+ 	  <collision name="tree3_collision">
+ 	      <geometry>
+ 		  <mesh>
+@@ -166,7 +166,7 @@
+     <model name="tree5">
+       <static>true</static>
+       <link name="tree5_link">
+-	  <pose>15 1 0.5 0 0 0.3</pose>
++	  <pose>3 1 0.5 0 0 0.3</pose>
+ 	  <collision name="tree5_collision">
+ 	      <geometry>
+ 		  <mesh>
+@@ -238,7 +238,7 @@
+     <model name="tree8">
+       <static>true</static>
+       <link name="tree8_link">
+-	  <pose>15 -10 0.5 0 0 0.5</pose>
++	  <pose>8 -9 0.5 0 0 0.5</pose>
+ 	  <collision name="tree8_collision">
+ 	      <geometry>
+ 		  <mesh>
+@@ -262,7 +262,7 @@
+     <model name="tree9">
+       <static>true</static>
+       <link name="tree9_link">
+-	  <pose>-2 -15.5 0.5 0 0 0.5</pose>
++	  <pose>-2 -7.5 0.5 0 0 0.5</pose>
+ 	  <collision name="tree9_collision">
+ 	      <geometry>
+ 		  <mesh>
+@@ -334,7 +334,7 @@
+     <model name="cornerstone3">
+       <static>true</static>
+       <link name="cornerstone_link3">
+-	  <pose>9.5 0.5 0 0 0 0</pose>
++	  <pose>6.5 0.5 0 0 0 0</pose>
+ 	  <collision name="cornerstone_collision3">
+ 	      <geometry>
+ 		  <mesh>
+@@ -358,7 +358,7 @@
+     <model name="cornerstone4">
+       <static>true</static>
+       <link name="cornerstone_link4">
+-	  <pose>9.5 -1 0 0 0 0</pose>
++	  <pose>9.5 -9 0 0 0 0</pose>
+ 	  <collision name="cornerstone_collision4">
+ 	      <geometry>
+ 		  <mesh>
+diff --git a/launch/run_simulation.launch b/launch/run_simulation.launch
+index 3e872e5..5b9f810 100644
+--- a/launch/run_simulation.launch
++++ b/launch/run_simulation.launch
+@@ -39,7 +39,7 @@
+ 
+     <!-- The coil signal simulator - required when not using the real robot -->
+ <!--    <node name="coilSignalSimulator" pkg="hratc2017_framework" type="coilSignalSimulator.py"/>-->
+-    <node name="coilSignalSimulator" pkg="hratc2017_framework" type="coilSignalSimulator">
++    <node name="coilSignalSimulator" pkg="hratc2017_framework" type="coilSignalSimulator" output="screen">
+       <rosparam file="$(find hratc2017_framework)/settings/minefield.yaml" command="load" />
+       <rosparam file="$(find hratc2017_framework)/settings/judge.yaml" command="load" />
+       <rosparam file="$(find hratc2017_framework)/description/worlds/coordinates.yaml" command="load" />
 diff --git a/launch/world-park.launch b/launch/world-park.launch
 index 3b50ab1..995a06f 100644
 --- a/launch/world-park.launch
@@ -92,3 +190,51 @@ index cdece7f..a5bcacf 100644
 -          longitude: -2.032711999
 -          altitude: 10
 \ No newline at end of file
+diff --git a/src/coilSignalSimulator/CoilSignalSimulator.cpp b/src/coilSignalSimulator/CoilSignalSimulator.cpp
+index a7338ad..df1bab9 100644
+--- a/src/coilSignalSimulator/CoilSignalSimulator.cpp
++++ b/src/coilSignalSimulator/CoilSignalSimulator.cpp
+@@ -99,25 +99,38 @@ float CoilSignalSimulator::GaussianMine(float sqrdist, const metalObject& m)
+ 
+ float CoilSignalSimulator::Gaussian(float sqrdist, const metalObject& m)
+ {
++    ROS_DEBUG_STREAM("Gaussian : sqrdist: " << sqrdist << ", m.eta: " << m.eta << ", m.var: " << m.var);
+     if(sqrdist > 20.0*(m.var))
++    {
++
++        ROS_DEBUG_STREAM("Gaussian : return 0.0");
+         return 0.0;
++    }
+     else
++    {
++
++        ROS_DEBUG_STREAM("Gaussian : return " << (m.eta * exp(-0.5*sqrdist/m.var)));
+         return m.eta * exp(-0.5*sqrdist/m.var);
++    }
+ }
+ 
+ void CoilSignalSimulator::computeDistanceToMines()
+ {
+     // Left coil
+-    cout << "Left ";
+     leftValue = minValue + random_number(-noise,noise);
+     for(int m=0; m < config->numMines; m++){
++        ROS_DEBUG_STREAM("--------------------" << m << "--------------------");
++        ROS_DEBUG_STREAM("Left Coil: config->minesPositions[m].x " << config->minesPositions[m].x);
++        ROS_DEBUG_STREAM("Left Coil: leftCoilPose.pose.position.x " <<  leftCoilPose.pose.position.x);
++        ROS_DEBUG_STREAM("Left Coil: config->minesPositions[m].y " << config->minesPositions[m].y);
++        ROS_DEBUG_STREAM("Left Coil: leftCoilPose.pose.position.y " << leftCoilPose.pose.position.y);
+         float sqr_dist = pow(config->minesPositions[m].x - leftCoilPose.pose.position.x, 2.0) +
+-                          pow(config->minesPositions[m].y - leftCoilPose.pose.position.y, 2.0);
+-        float val = Gaussian(sqr_dist,mine);
+-        cout << val << "(" << sqr_dist << ") ";
++                         pow(config->minesPositions[m].y - leftCoilPose.pose.position.y, 2.0);
++        float val = Gaussian(sqr_dist, mine);
++        ROS_DEBUG_STREAM("Left Coil: Gaussian(sqr_dist) "  << val << "(" << sqr_dist << ")");
+         leftValue += val;
+     }
+-    cout << endl << flush;
++    // cout << endl << flush;
+     for(int m=0; m < otherObjects.size(); m++){
+         float sqr_dist = pow(otherObjects[m].x - leftCoilPose.pose.position.x, 2.0) +
+                           pow(otherObjects[m].y - leftCoilPose.pose.position.y, 2.0);
