@@ -12,10 +12,10 @@ index 4a1767f..898a656 100644
                          <stddev>0.01</stddev>
                      </noise>
 diff --git a/launch/world-park.launch b/launch/world-park.launch
-index 3b50ab1..f2f7d9c 100644
+index 3b50ab1..995a06f 100644
 --- a/launch/world-park.launch
 +++ b/launch/world-park.launch
-@@ -8,7 +8,7 @@
+@@ -8,12 +8,12 @@
    <arg name="gui" default="true"/>
    <arg name="simple_rviz" default="true"/>
    <arg name="headless" default="false"/>
@@ -24,6 +24,13 @@ index 3b50ab1..f2f7d9c 100644
    <arg name="verbose" default="true"/>
  
    <!-- Set the type of terrain-->
+-<!--  <arg name="scenario" default="flatMinefield"/>-->
+-  <arg name="scenario" default="softWavyMinefield"/>
++ <arg name="scenario" default="flatMinefield"/>
++  <!-- <arg name="scenario" default="softWavyMinefield"/> -->
+ <!--  <arg name="scenario" default="hardWavyMinefield"/>-->
+ 
+   <arg name="world" default="$(find hratc2017_framework)/description/worlds/$(arg scenario).world" />
 @@ -34,7 +34,9 @@
    <arg     if="$(arg debug)" name="script_type" value="debug"/>
  
