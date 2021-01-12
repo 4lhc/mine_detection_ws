@@ -141,11 +141,12 @@ index 3b50ab1..995a06f 100644
      <remap from="tf" to="gazebo_tf"/>
    </node>
 diff --git a/settings/minefield.yaml b/settings/minefield.yaml
-index cdece7f..a5bcacf 100644
+index cdece7f..406cc6d 100644
 --- a/settings/minefield.yaml
 +++ b/settings/minefield.yaml
 @@ -1,36 +1,21 @@
- minefield:
+-minefield:
++mqinefield:
  
         corner1: 
 -          latitude: 11.364583
